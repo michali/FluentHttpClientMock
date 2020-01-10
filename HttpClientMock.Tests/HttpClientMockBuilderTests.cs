@@ -5,7 +5,7 @@ using System.Net;
 
 namespace HttpClientMock.Tests
 {
-    public class HttpClientWithExpectationsBuilderTests
+    public class HttpClientMockBuilderTests
     {
         [Fact]
         public async Task WhenUriIsSet_ExpectUri()
