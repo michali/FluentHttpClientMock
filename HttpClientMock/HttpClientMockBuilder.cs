@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace HttpClientMock
 {
@@ -25,6 +26,10 @@ namespace HttpClientMock
 
         public HttpClient Build()
         {
+            if (MessageHandler == null)
+            {
+                MessageHandler = new HttpMessageHandlerStub();
+            }
             return new HttpClient(MessageHandler);
         }
     }

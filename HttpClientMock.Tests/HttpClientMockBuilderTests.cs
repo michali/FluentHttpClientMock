@@ -185,15 +185,11 @@ namespace HttpClientMock.Tests
         [Fact]
         public async Task Delete_WhenNoRequestContentIsSent_RequestContentShouldBeNull()
         {
-            var requestUrl = "https://path.to.url";
             var builder = HttpClientMockBuilder.Create();
             
-            builder.When.AbsoluteUrlIs(requestUrl)
-            .Then.ResponseShouldBe(null);
-
             var client = builder.Build();
 
-            var response = await client.DeleteAsync(requestUrl);
+            await client.DeleteAsync("https://path.to.url");
 
             Assert.Null(builder.RequestContent);
         }
@@ -201,17 +197,15 @@ namespace HttpClientMock.Tests
         [Fact]
         public async Task Put_WhenRequestContentIsSent_GetsResponse()
         {
-            var requestUrl = "https://path.to.url";
             var requestContent = "request content";
             var builder = HttpClientMockBuilder.Create();
             
-            builder.When.AbsoluteUrlIs(requestUrl)
-            .And.RequestMessageStringIs(requestContent)
+            builder.When.RequestMessageStringIs(requestContent)
             .Then.ResponseShouldBe(null);
 
             var client = builder.Build();
 
-            var response = await client.PutAsync(requestUrl, new StringContent(requestContent));
+            await client.PutAsync("https://path.to.url", new StringContent(requestContent));
 
             Assert.Equal(requestContent, builder.RequestContent);
         }
@@ -219,19 +213,17 @@ namespace HttpClientMock.Tests
         [Fact]
         public async Task Patch_WhenRequestContentIsSent_GetsResponse()
         {
-            var requestUrl = "https://path.to.url";
             var requestContent = "request content";
             var builder = HttpClientMockBuilder.Create();
             
-            builder.When.AbsoluteUrlIs(requestUrl)
-            .And.RequestMessageStringIs(requestContent)
+            builder.When.RequestMessageStringIs(requestContent)
             .Then.ResponseShouldBe(null);
 
             var client = builder.Build();
 
-            var response = await client.PatchAsync(requestUrl, new StringContent(requestContent));
+            await client.PatchAsync("https://path.to.url", new StringContent(requestContent));
 
             Assert.Equal(requestContent, builder.RequestContent);
-        }
+        } 
     }
 }

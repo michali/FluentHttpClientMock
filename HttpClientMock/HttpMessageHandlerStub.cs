@@ -16,6 +16,14 @@ namespace HttpClientMock
             _sendAsync = sendAsync;
         }
 
+        internal HttpMessageHandlerStub()
+        {
+            _sendAsync = async (request, cancellationToken) => await Task.FromResult(new HttpResponseMessage
+                {
+                    Content = new ByteArrayContent(new byte[] { })
+                });
+        }
+
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             AbsoluteRequestUri = request.RequestUri.AbsoluteUri;
