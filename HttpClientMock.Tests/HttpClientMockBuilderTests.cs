@@ -122,7 +122,6 @@ namespace HttpClientMock.Tests
        {
             var expectedRequestContent = "request content";
             var builder = HttpClientMockBuilder.Create();
-            builder.SetRequestMessageString("request content");
 
             var client = builder.Build();
 
@@ -204,8 +203,6 @@ namespace HttpClientMock.Tests
             var requestContent = "request content";
             var builder = HttpClientMockBuilder.Create();
 
-            builder.SetRequestMessageString(requestContent);
-
             var client = builder.Build();
 
             await client.PutAsync("https://path.to.url", new StringContent(requestContent));
@@ -219,13 +216,11 @@ namespace HttpClientMock.Tests
             var requestContent = "request content";
             var builder = HttpClientMockBuilder.Create();
 
-            builder.SetRequestMessageString(requestContent);
-
             var client = builder.Build();
 
             await client.PatchAsync("https://path.to.url", new StringContent(requestContent));
 
             Assert.Equal(requestContent, builder.RequestContent);
-        } 
+        }
     }
 }
