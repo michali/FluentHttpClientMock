@@ -20,8 +20,12 @@ namespace HttpClientMock
         {
             AbsoluteRequestUri = request.RequestUri.AbsoluteUri;
 
-            if (request.Method != HttpMethod.Get) // todo: better handling of empty request content
+            if (request.Method == HttpMethod.Post 
+            || request.Method == HttpMethod.Put 
+            || request.Method.Method == "PATCH")
+            {
                 RequestContent = await request.Content?.ReadAsStringAsync();
+            }
 
             return await _sendAsync(request, cancellationToken);
         }

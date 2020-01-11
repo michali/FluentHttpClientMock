@@ -164,5 +164,74 @@ namespace HttpClientMock.Tests
 
             Assert.NotEqual(responseContent, await response.Content.ReadAsStringAsync());
         }
+
+        [Fact]
+        public async Task HttpGet_WhenExpectationFails_NoContentBodyIsReturned()
+        {
+            var requestUrl = "https://path.to.url";
+            var responseContent = "response content";
+            var builder = HttpClientMockBuilder.Create();
+            
+            builder.When.AbsoluteUrlIs(requestUrl)
+            .Then.ResponseShouldBe(responseContent);
+
+            var client = builder.Build();
+
+            var response = await client.GetAsync("https://path.to.otherurl/");
+
+            Assert.NotEqual(responseContent, await response.Content.ReadAsStringAsync());
+        }
+
+        [Fact]
+        public async Task Delete_WhenNoRequestContentIsSent_RequestContentShouldBeNull()
+        {
+            var requestUrl = "https://path.to.url";
+            var builder = HttpClientMockBuilder.Create();
+            
+            builder.When.AbsoluteUrlIs(requestUrl)
+            .Then.ResponseShouldBe(null);
+
+            var client = builder.Build();
+
+            var response = await client.DeleteAsync(requestUrl);
+
+            Assert.Null(builder.RequestContent);
+        }
+
+        [Fact]
+        public async Task Put_WhenRequestContentIsSent_GetsResponse()
+        {
+            var requestUrl = "https://path.to.url";
+            var requestContent = "request content";
+            var builder = HttpClientMockBuilder.Create();
+            
+            builder.When.AbsoluteUrlIs(requestUrl)
+            .And.RequestMessageStringIs(requestContent)
+            .Then.ResponseShouldBe(null);
+
+            var client = builder.Build();
+
+            var response = await client.PutAsync(requestUrl, new StringContent(requestContent));
+
+            Assert.Equal(requestContent, builder.RequestContent);
+        }
+
+        [Fact]
+        public async Task Patch_WhenRequestContentIsSent_GetsResponse()
+        {
+            var requestUrl = "https://path.to.url";
+            var requestContent = "request content";
+            var builder = HttpClientMockBuilder.Create();
+            
+            builder.When.AbsoluteUrlIs(requestUrl)
+            .And.RequestMessageStringIs(requestContent)
+            .Then.ResponseShouldBe(null);
+
+            var client = builder.Build();
+
+            var response = await client.PatchAsync(requestUrl, new StringContent(requestContent));
+
+            Assert.Equal(requestContent, builder.RequestContent);
+        }
     }
 }
