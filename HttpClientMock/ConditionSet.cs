@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 
 namespace HttpClientMock
@@ -6,26 +7,27 @@ namespace HttpClientMock
     public class ConditionSet
     {
         private readonly HttpClientMockBuilder _httpClientWithExpectationsBuilder;
-        private Predicate<HttpRequestMessage> _condition;
+        private ICollection<Predicate<HttpRequestMessage>> _conditions;
         public ConditionSet(HttpClientMockBuilder httpClientWithExpectationsBuilder)
         {
             _httpClientWithExpectationsBuilder = httpClientWithExpectationsBuilder;
+            _conditions = new HashSet<Predicate<HttpRequestMessage>>();
         }
 
         public ConditionSet And => this;
 
         public ConditionSet RequestMessageStringIs(string expectedRequestContent)
         {
-            _condition = message => message.Content.ReadAsStringAsync().Result == expectedRequestContent;
+            _conditions.Add(message => message.Content.ReadAsStringAsync().Result == expectedRequestContent);
             return this;
         }
 
-        public ConditionSet AbsoluteUrlIs(string absoluteUrl)
+        public ConditionSet AbsoluteUrlIs(string absoluteUri)
         {
-            _condition = message => message.RequestUri.AbsoluteUri == absoluteUrl;
+            _conditions.Add(message => message.RequestUri.AbsoluteUri == absoluteUri);
             return this;
         }
 
-        public Expectation Then => new Expectation(_httpClientWithExpectationsBuilder, _condition);
+        public Expectation Then => new Expectation(_httpClientWithExpectationsBuilder, _conditions);
     }
 }

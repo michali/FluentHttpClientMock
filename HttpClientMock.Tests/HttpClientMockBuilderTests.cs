@@ -126,5 +126,43 @@ namespace HttpClientMock.Tests
 
             Assert.Equal(expectedRequestContent, builder.RequestContent);
        }
+
+        [Fact]
+        public async Task CanSetTwoExpectations()
+        {
+            var expectedUrl = "https://path.to.url/";
+            var expectedRequestContent = "request content";
+            var builder = HttpClientMockBuilder.Create();
+            
+            builder.When.AbsoluteUrlIs(expectedUrl)
+            .And.RequestMessageStringIs(expectedRequestContent)
+            .Then.ResponseShouldBe("response content");
+
+            var client = builder.Build();
+
+            var response = await client.PostAsync(expectedUrl, new StringContent(expectedRequestContent));
+
+            Assert.Equal(expectedUrl, builder.AbsoluteRequestUri);
+            Assert.Equal(expectedRequestContent, builder.RequestContent);
+        }
+
+        [Fact]
+        public async Task CanSetTwoExpectations_WhenSomeExpectationsAreNotMet_ExpectedResponseShouldNotBeReturned()
+        {
+            var requestUrl = "https://path.to.url/";
+            var expectedRequestContent = "request content";
+            var responseContent = "response content";
+            var builder = HttpClientMockBuilder.Create();
+            
+            builder.When.AbsoluteUrlIs(requestUrl)
+            .And.RequestMessageStringIs(expectedRequestContent)
+            .Then.ResponseShouldBe(responseContent);
+
+            var client = builder.Build();
+
+            var response = await client.PostAsync("https://path.to.otherurl/", new StringContent(expectedRequestContent));
+
+            Assert.NotEqual(responseContent, await response.Content.ReadAsStringAsync());
+        }
     }
 }
