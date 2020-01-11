@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace HttpClientMock
 {
-    public class HttpClientMockBuilder
+    public class HttpClientMocker
     {
         private static ConditionSet _conditionSet;
         internal HttpMessageHandlerStub MessageHandler { private get; set; }
@@ -12,14 +12,14 @@ namespace HttpClientMock
         public string AbsoluteRequestUri => MessageHandler.AbsoluteRequestUri;
         public string RequestContent => MessageHandler.RequestContent;
 
-        private HttpClientMockBuilder()
+        private HttpClientMocker()
         {
             _conditionSet = new ConditionSet(this);
         }
 
-        public static HttpClientMockBuilder Create()
+        public static HttpClientMocker Create()
         {
-            return new HttpClientMockBuilder();
+            return new HttpClientMocker();
         }
 
         public ConditionSet When => _conditionSet;

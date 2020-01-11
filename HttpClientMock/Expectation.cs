@@ -8,17 +8,17 @@ namespace HttpClientMock
 {
     public class Expectation
     {
-        private readonly HttpClientMockBuilder _httpClientWithExpectationsBuilder;
+        private readonly HttpClientMocker _httpClientWithExpectationsBuilder;
         private readonly ICollection<Predicate<HttpRequestMessage>> _conditions;
 
-        public Expectation(HttpClientMockBuilder httpClientWithExpectationsBuilder,
+        internal Expectation(HttpClientMocker httpClientWithExpectationsBuilder,
             ICollection<Predicate<HttpRequestMessage>> conditions)
         {
             _httpClientWithExpectationsBuilder = httpClientWithExpectationsBuilder;
             _conditions = conditions;
         }
 
-        public HttpClientMockBuilder ResponseShouldBe(string expectedResponseContent, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public HttpClientMocker ResponseShouldBe(string expectedResponseContent, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var handler = new HttpMessageHandlerStub(async (request, cancellationToken) =>
             {

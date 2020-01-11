@@ -6,9 +6,9 @@ namespace HttpClientMock
 {
     public class ConditionSet
     {
-        private readonly HttpClientMockBuilder _httpClientWithExpectationsBuilder;
+        private readonly HttpClientMocker _httpClientWithExpectationsBuilder;
         private ICollection<Predicate<HttpRequestMessage>> _conditions;
-        public ConditionSet(HttpClientMockBuilder httpClientWithExpectationsBuilder)
+        internal ConditionSet(HttpClientMocker httpClientWithExpectationsBuilder)
         {
             _httpClientWithExpectationsBuilder = httpClientWithExpectationsBuilder;
             _conditions = new HashSet<Predicate<HttpRequestMessage>>();

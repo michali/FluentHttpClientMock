@@ -5,14 +5,14 @@ using System.Net;
 
 namespace HttpClientMock.Tests
 {
-    public class HttpClientMockBuilderTests
+    public class HttpClientMockerTests
     {
         [Fact]
         public async Task WhenUriIsSet_ExpectUri()
         {
             var responseContent = "content";
             var requestUrl = "https://path.to.url/";
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
 
             builder.When.AbsoluteUrlIs(requestUrl)
             .Then.ResponseShouldBe(responseContent);
@@ -29,7 +29,7 @@ namespace HttpClientMock.Tests
         {            
             var responseContent = "content";
 
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
 
             builder.When.AbsoluteUrlIs("https://path.to.url/")
             .Then.ResponseShouldBe(responseContent);
@@ -47,7 +47,7 @@ namespace HttpClientMock.Tests
             var requestContent = "request content";
             var responseContent = "response content";
 
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
 
             builder.When.RequestMessageStringIs(requestContent)
             .Then.ResponseShouldBe(responseContent);
@@ -63,7 +63,7 @@ namespace HttpClientMock.Tests
         public async Task WhenExpectedRequestContentIsNotSent_ShouldNotReturnExpectedResponse()
         {
             var responseContent = "response content";
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
 
             builder.When.RequestMessageStringIs(responseContent)
             .Then.ResponseShouldBe("response content");
@@ -78,7 +78,7 @@ namespace HttpClientMock.Tests
         [Fact]
         public async Task ShouldReturnEmptyResponse()
         {
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
             builder.When.RequestMessageStringIs("request content")
             .Then.ResponseShouldBe(null);
 
@@ -93,7 +93,7 @@ namespace HttpClientMock.Tests
         [Fact]
         public async Task SetsResponseStatusCode()
         {
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
             builder.When.RequestMessageStringIs("request content")
             .Then.ResponseShouldBe(null, HttpStatusCode.Accepted);
 
@@ -108,7 +108,7 @@ namespace HttpClientMock.Tests
        public async Task RetrievesAbsoluteUri()
        {
             var expectedUrl = "https://path.to.url/";
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
 
             var client = builder.Build();
 
@@ -121,7 +121,7 @@ namespace HttpClientMock.Tests
        public async Task RetrievesRequestContent()
        {
             var expectedRequestContent = "request content";
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
 
             var client = builder.Build();
 
@@ -135,7 +135,7 @@ namespace HttpClientMock.Tests
         {
             var expectedUrl = "https://path.to.url/";
             var expectedRequestContent = "request content";
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
             
             builder.When.AbsoluteUrlIs(expectedUrl)
             .And.RequestMessageStringIs(expectedRequestContent)
@@ -155,7 +155,7 @@ namespace HttpClientMock.Tests
             var requestUrl = "https://path.to.url/";
             var expectedRequestContent = "request content";
             var responseContent = "response content";
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
             
             builder.When.AbsoluteUrlIs(requestUrl)
             .And.RequestMessageStringIs(expectedRequestContent)
@@ -173,7 +173,7 @@ namespace HttpClientMock.Tests
         {
             var requestUrl = "https://path.to.url";
             var responseContent = "response content";
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
             
             builder.When.AbsoluteUrlIs(requestUrl)
             .Then.ResponseShouldBe(responseContent);
@@ -188,7 +188,7 @@ namespace HttpClientMock.Tests
         [Fact]
         public async Task Delete_WhenNoRequestContentIsSent_RequestContentShouldBeNull()
         {
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
             
             var client = builder.Build();
 
@@ -201,7 +201,7 @@ namespace HttpClientMock.Tests
         public async Task Put_WhenRequestContentIsSent_GetsResponse()
         {
             var requestContent = "request content";
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
 
             var client = builder.Build();
 
@@ -214,7 +214,7 @@ namespace HttpClientMock.Tests
         public async Task Patch_WhenRequestContentIsSent_GetsResponse()
         {
             var requestContent = "request content";
-            var builder = HttpClientMockBuilder.Create();
+            var builder = HttpClientMocker.Create();
 
             var client = builder.Build();
 
