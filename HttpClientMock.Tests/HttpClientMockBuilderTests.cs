@@ -10,14 +10,15 @@ namespace HttpClientMock.Tests
         [Fact]
         public async Task WhenUriIsSet_ExpectUri()
         {
+            var expectedUrl = "https://path.to.url/";
             var builder = HttpClientMockBuilder.Create();
 
-            builder.When.AbsoluteUrlIs("https://path.to.url/")
+            builder.When.AbsoluteUrlIs(expectedUrl)
             .Then.ResponseShouldBe("content");
 
             var client = builder.Build();
 
-            var response = await client.GetAsync("https://path.to.url/");
+            var response = await client.GetAsync(expectedUrl);
 
             Assert.Equal("content", await response.Content.ReadAsStringAsync());
         }
@@ -65,7 +66,7 @@ namespace HttpClientMock.Tests
             var response = await client.PostAsync("https://path.to.url/", new StringContent("other request content"));
 
             Assert.NotEqual("response content", await response.Content.ReadAsStringAsync());
-        }        
+        }
 
         [Fact]
         public async Task ShouldReturnEmptyResponse()
@@ -95,5 +96,35 @@ namespace HttpClientMock.Tests
 
             Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
         }
+
+       [Fact]
+       public async Task RetrievesAbsoluteUri()
+       {
+            var expectedUrl = "https://path.to.url/";
+            var builder = HttpClientMockBuilder.Create();
+            builder.When.RequestMessageStringIs("request content")
+            .Then.ResponseShouldBe(null, expectedStatusCode: HttpStatusCode.OK);
+
+            var client = builder.Build();
+
+            var response = await client.PostAsync(expectedUrl, new StringContent("request content"));
+
+            Assert.Equal(expectedUrl, builder.AbsoluteRequestUri);
+       }
+
+       [Fact]
+       public async Task RetrievesRequestContent()
+       {
+            var expectedRequestContent = "request content";
+            var builder = HttpClientMockBuilder.Create();
+            builder.When.RequestMessageStringIs("request content")
+            .Then.ResponseShouldBe(null, expectedStatusCode: HttpStatusCode.OK);
+
+            var client = builder.Build();
+
+            var response = await client.PostAsync("https://path.to.url/", new StringContent(expectedRequestContent));
+
+            Assert.Equal(expectedRequestContent, builder.RequestContent);
+       }
     }
 }
