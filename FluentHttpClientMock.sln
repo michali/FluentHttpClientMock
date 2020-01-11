@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientMock", "HttpClientMock\HttpClientMock.csproj", "{F6865820-F731-465B-BC87-4EC500028DB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentHttpClientMock", "FluentHttpClientMock\FluentHttpClientMock.csproj", "{F6865820-F731-465B-BC87-4EC500028DB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientMock.Tests", "HttpClientMock.Tests\HttpClientMock.Tests.csproj", "{C32E9C9D-F39E-457A-BEDD-FF37E63A04CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentHttpClientMock.Tests", "FluentHttpClientMock.Tests\FluentHttpClientMock.Tests.csproj", "{C32E9C9D-F39E-457A-BEDD-FF37E63A04CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

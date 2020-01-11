@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HttpClientMock\HttpClientMock.csproj" />
+    <ProjectReference Include="..\FluentHttpClientMock\FluentHttpClientMock.csproj" />
   </ItemGroup>
 
 </Project>
