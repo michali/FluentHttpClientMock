@@ -32,5 +32,22 @@ namespace HttpClientMock
             }
             return new HttpClient(MessageHandler);
         }
+
+        public HttpClientMockBuilder SetRequestMessageString(string requestContent)
+        {
+            var handler = new HttpMessageHandlerStub(async (request, cancellationToken) =>
+            {          
+                var responseMessage = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                {
+                    Content = new StringContent(requestContent)
+                };
+
+                return await Task.FromResult(responseMessage);
+            });
+
+            MessageHandler = handler;
+
+            return this;
+        }
     }
 }

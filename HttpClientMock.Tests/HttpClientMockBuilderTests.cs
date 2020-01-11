@@ -122,7 +122,7 @@ namespace HttpClientMock.Tests
        {
             var expectedRequestContent = "request content";
             var builder = HttpClientMockBuilder.Create();
-            builder.When.RequestMessageStringIs("request content");
+            builder.SetRequestMessageString("request content");
 
             var client = builder.Build();
 
@@ -203,8 +203,8 @@ namespace HttpClientMock.Tests
         {
             var requestContent = "request content";
             var builder = HttpClientMockBuilder.Create();
-            
-            builder.When.RequestMessageStringIs(requestContent);
+
+            builder.SetRequestMessageString(requestContent);
 
             var client = builder.Build();
 
@@ -218,9 +218,8 @@ namespace HttpClientMock.Tests
         {
             var requestContent = "request content";
             var builder = HttpClientMockBuilder.Create();
-            
-            builder.When.RequestMessageStringIs(requestContent)
-            .Then.ResponseShouldBe(null);
+
+            builder.SetRequestMessageString(requestContent);
 
             var client = builder.Build();
 
