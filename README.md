@@ -34,4 +34,11 @@ mocker.When.RequestMessageStringIs("Request content")
 .Then.ResponseShouldBe("Response content");
 ```
 
+## Asserting HTTP requests
+
+The `HttpClientMocker` class exposes members that return certain data that was sent through the mocked HTTP client.
+
+`AbsoluteRequestUri` returns the absolute URI that the HTTP client used to make its last HTTP call
+`RequestContent` returns the content body that the HTTP client sent last 
+
 The mocker is written in .NET Standard 2.0
