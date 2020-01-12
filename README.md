@@ -33,3 +33,5 @@ mocker.When.RequestMessageStringIs("Request content")
 .And.AbsoluteUrlIs("https://path.to.url/")
 .Then.ResponseShouldBe("Response content");
 ```
+
+The mocker is written in .NET Standard 2.0
