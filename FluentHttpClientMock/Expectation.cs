@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace HttpClientMock
 {
+    /// <summary>
+    /// Encapsulates the expectations set on a mocked <c>HttpClient</c>
+    /// </summary>
     public class Expectation
     {
         private readonly HttpClientMocker _httpClientWithExpectationsBuilder;
@@ -18,6 +21,12 @@ namespace HttpClientMock
             _conditions = conditions;
         }
 
+        /// <summary>
+        /// Sets expectations on the response of a mocked <c>HttpClient</c>
+        /// </summary>
+        /// <param name="expectedResponseContent">The expected content in the HTTP response body</param>
+        /// <param name="expectedStatusCode">The expected HTTP Status Code</param>
+        /// <returns></returns>
         public HttpClientMocker ResponseShouldBe(string expectedResponseContent, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var handler = new HttpMessageHandlerStub(async (request, cancellationToken) =>
