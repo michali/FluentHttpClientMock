@@ -61,4 +61,4 @@ Task("Package")
     NuGetPack($"./{projectName}/{projectName}.csproj", nuGetPackSettings);
   });
 
-RunTarget("Build");
+RunTarget("Package");
