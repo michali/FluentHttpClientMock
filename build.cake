@@ -1,4 +1,5 @@
 var configuration = Argument("Configuration", "Release");
+var version = Argument("version", "1.0.0.0");
 var projectName = "FluentHttpClientMock";
 var solution = "./FluentHttpClientMock.sln";
 
@@ -13,10 +14,14 @@ Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
     {
+        var msBuildSettings = new DotNetCoreMSBuildSettings();
+        msBuildSettings.SetVersion(version);
+
         DotNetCoreBuild(solution,
            new DotNetCoreBuildSettings()
                 {
-                    Configuration = configuration
+                    Configuration = configuration,
+                    MSBuildSettings = msBuildSettings
                 });
     });
 
@@ -48,11 +53,12 @@ Task("Package")
       Properties = new Dictionary<string, string>
       {
         { "Configuration", "Release" }
-      }
+      },
+      Version = version
     };
 
     MSBuild($"./{projectName}/{projectName}.csproj", new MSBuildSettings().SetConfiguration("Release"));
     NuGetPack($"./{projectName}/{projectName}.csproj", nuGetPackSettings);
   });
 
-RunTarget("Package");
+RunTarget("Build");
