@@ -1,5 +1,5 @@
 var configuration = Argument("Configuration", "Release");
-var version = Argument("version", "1.0.0.0");
+var version = Argument("version", "1.0.0.0-beta");
 var projectName = "FluentHttpClientMock";
 var solution = "./FluentHttpClientMock.sln";
 
