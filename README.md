@@ -41,4 +41,7 @@ The `HttpClientMocker` class exposes members that return certain data that was s
 `AbsoluteRequestUri` returns the absolute URI that the HTTP client used to make its last HTTP call
 `RequestContent` returns the content body that the HTTP client sent last 
 
+## Building the project
+The project uses [Cake](https://cakebuild.net/) for its build process. Running `build.ps1` (Remote Signed script) will version and compile the project, run the unit tests and create a NuGet package. If you don't want to package the project at this moment, you can change the final build task on the last line (`RunTarget("Package");`) to "`Test`".
+
 The mocker is written in .NET Standard 2.0
