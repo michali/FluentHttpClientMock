@@ -10,6 +10,8 @@ namespace HttpClientMock
     public class HttpClientMocker
     {
         private static ConditionSet _conditionSet;
+        private string _baseAddress;
+        private static HttpClientMocker _mocker;
 
         /// <summary>
         /// A fake <c>HttpMessageHandler</c> that does the work of accessing
@@ -38,7 +40,8 @@ namespace HttpClientMock
         /// <returns>A new <c>HttpClientMocker</c> object</returns>
         public static HttpClientMocker Create()
         {
-            return new HttpClientMocker();
+            _mocker = new HttpClientMocker();
+            return _mocker;
         }
 
         /// <summary>
@@ -58,7 +61,20 @@ namespace HttpClientMock
             {
                 MessageHandler = new HttpMessageHandlerStub();
             }
-            return new HttpClient(MessageHandler);
+            var httpClient = new HttpClient(MessageHandler);
+
+            if (_baseAddress != null)
+            {
+                httpClient.BaseAddress = new Uri(_baseAddress);
+            }
+
+            return httpClient;
+        }
+
+        public HttpClientMocker SetBaseRequestUri(string baseAddress)
+        {
+            _baseAddress = baseAddress;
+            return _mocker;
         }
     }
 }

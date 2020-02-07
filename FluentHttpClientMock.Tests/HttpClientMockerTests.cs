@@ -222,5 +222,19 @@ namespace HttpClientMock.Tests
 
             Assert.Equal(requestContent, mocker.RequestContent);
         }
+
+        [Fact]
+        public async Task SetBaseUrl()
+        {
+            var requestContent = "request content";
+            var mocker = HttpClientMocker.Create();
+            mocker.SetBaseRequestUri("http://www.path.to");
+
+            var client = mocker.Build();
+
+            await client.PatchAsync("endpoint", new StringContent(requestContent));
+
+            Assert.Equal("http://www.path.to/endpoint", mocker.AbsoluteRequestUri);
+        }
     }
 }
