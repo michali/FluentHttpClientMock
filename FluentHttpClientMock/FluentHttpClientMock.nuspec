@@ -12,5 +12,7 @@
                 Setting expectations forthe HTTP response body.
         </releaseNotes>
         <tags>HttpClient, Mock, Testing</tags>
+        <projectUrl>https://github.com/michali/FluentHttpClientMock</projectUrl>
+        <license type="expression">BSD-3-Clause</license>
     </metadata>
 </package>
